@@ -69,3 +69,6 @@ function playGame() {
         ${computerScore > playerScore ? 'Computer' : 'You'} won the Game!!
     `);
 }
+
+
+playGame();
