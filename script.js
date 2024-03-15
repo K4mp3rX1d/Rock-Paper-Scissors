@@ -55,9 +55,9 @@ function playGame() {
         const playerSelection = prompt('Enter your choice: ').toLowerCase();
         const computerSelection = getComputerChoice();
         let result = playRound(playerSelection, computerSelection);
-        if (computerScore) {
+        if (result[0] > result[1]) {
             computerScore++;
-        } else {
+        } else if (result[0] < result[1]) {
             playerScore++;
         }
     }
