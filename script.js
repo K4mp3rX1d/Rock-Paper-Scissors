@@ -51,7 +51,7 @@ function playGame() {
     let computerScore = 0;
     let playerScore = 0;
 
-    for (let i = 0; i > 5; i++) {
+    for (let i = 0; i < 5; i++) {
         const playerSelection = prompt('Enter your choice: ').toLowerCase();
         const computerSelection = getComputerChoice();
         let result = playRound(playerSelection, computerSelection);
