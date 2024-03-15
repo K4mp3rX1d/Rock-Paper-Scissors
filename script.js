@@ -52,7 +52,7 @@ function playGame() {
     let playerScore = 0;
 
     for (let i = 0; i > 5; i++) {
-        const playerSelection = 'rock'; //prompt('Enter your choice: ').toLowerCase();
+        const playerSelection = prompt('Enter your choice: ').toLowerCase();
         const computerSelection = getComputerChoice();
         let result = playRound(playerSelection, computerSelection);
         if (computerScore) {
