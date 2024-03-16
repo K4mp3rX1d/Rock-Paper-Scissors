@@ -66,7 +66,9 @@ function playGame() {
         Computer:   ${computerScore}
         Player  :   ${playerScore}
 
-        ${computerScore > playerScore ? 'Computer' : 'You'} won the Game!!
+        ${computerScore === playerScore ? 'The Game ended with a Tie!' :
+            computerScore > playerScore ? 'Computer won the Game!!' :
+                'You won the Game!!'}
     `);
 }
 
