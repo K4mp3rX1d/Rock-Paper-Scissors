@@ -21,7 +21,7 @@ function playRound(playerSelection, computerSelection) {
             console.log("You Win! Rock beats Scissors");
             return [0, 1];
         }
-    } else if (playerSelection === 'Paper') {
+    } else if (playerSelection === 'paper') {
         if (computerSelection === 'rock') {
             console.log("You Win! Paper beats Rock");
             return [0, 1];
@@ -32,7 +32,7 @@ function playRound(playerSelection, computerSelection) {
             console.log("You Lose! Scissors cut Paper");
             return [1, 0];
         }
-    } else if (playerSelection === 'Scissors') {
+    } else if (playerSelection === 'scissors') {
         if (computerSelection === 'rock') {
             console.log("You Lose! Rock beats Scissors");
             return [1, 0];
