@@ -1,3 +1,4 @@
+// Functions
 function random(n) {
     return Math.floor(Math.random() * n);
 }
@@ -73,4 +74,12 @@ function playGame() {
 }
 
 
-playGame();
+// HTML Elements
+buttons = document.querySelectorAll('button');
+buttons.forEach(button => {
+    button.addEventListener('click', (event) => {
+        let computerSelection = getComputerChoice();
+        let playerSelection = event.target.innerHTML.toLowerCase();
+        console.log(playRound(playerSelection, computerSelection));
+    });
+});
