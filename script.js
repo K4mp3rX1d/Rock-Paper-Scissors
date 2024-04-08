@@ -36,6 +36,7 @@ function playGame(event) {
     console.log(`
         Player:     ${playerSelection.toUpperCase()}
         Computer:   ${computerSelection.toUpperCase()}
+
         ${playRound(playerSelection, computerSelection)};
     `);
 }
@@ -43,9 +44,10 @@ function playGame(event) {
 
 // HTML Elements & Event Handlers
 buttons = document.querySelectorAll('button');
-buttons.forEach(button => {
+buttons.forEach((button) => {
     button.addEventListener('click', (event) => {
+        event.stopPropagation();
         event.preventDefault();
         playGame(event);
-    });
+    }, false);
 });
