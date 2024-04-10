@@ -12,19 +12,19 @@ function getComputerChoice() {
 
 function playRound(playerSelection, computerSelection) {
     if (playerSelection === computerSelection) {
-        return'Tie!'
+        return'<h2>Tie!<h2>'
     } else if (playerSelection === 'rock' && computerSelection === 'paper') {
-        return'You Lose!! Paper beats Rock!'
+        return'<h2>You Lose!!</h2><p>Paper beats Rock!</p>'
     } else if (playerSelection === 'rock' && computerSelection === 'scissors') {
-        return'You Win!! Rock beats Scissors!'
+        return'<h2>You Win!!</h2><p>Rock beats Scissors!</p>'
     } else if (playerSelection === 'paper' && computerSelection === 'rock') {
-        return'You Win!! Paper beats Rock!'
+        return'<h2>You Win!!</h2><p>Paper beats Rock!</p>'
     } else if (playerSelection === 'paper' && computerSelection === 'scissors') {
-        return'You Lose!! Scissors cut paper!'
+        return'<h2>You Lose!!</h2><p>Scissors cut paper!</p>'
     } else if (playerSelection === 'scissors' && computerSelection === 'rock') {
-        return'You Lose!! Rock beats Scissors!'
+        return'<h2>You Lose!!</h2><p>Rock beats Scissors!</p>'
     } else if (playerSelection === 'scissors' && computerSelection === 'paper') {
-        return'You Win!! Scissors cut Paper!'
+        return'<h2>You Win!!</h2><p>Scissors cut Paper!</p>'
     }
 }
 
@@ -32,13 +32,12 @@ function playRound(playerSelection, computerSelection) {
 function playGame(event) {
     const playerSelection = event.target.innerHTML.toLowerCase();
     const computerSelection = getComputerChoice();
+    const players = document.querySelectorAll('.choice');
+    const result = document.querySelector('.message');
 
-    console.log(`
-        Player:     ${playerSelection.toUpperCase()}
-        Computer:   ${computerSelection.toUpperCase()}
-
-        ${playRound(playerSelection, computerSelection)};
-    `);
+    players[0].textContent = playerSelection.toUpperCase();
+    players[1].textContent = computerSelection.toUpperCase();
+    result.innerHTML = playRound(playerSelection, computerSelection);
 }
 
 
