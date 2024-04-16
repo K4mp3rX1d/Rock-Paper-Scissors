@@ -51,10 +51,15 @@ function updateScore(points) {
 }
 
 function resetGame() {
+    scores = [0, 0];
     messageBox.textContent = '';
     playerScore.textContent = 0;
     computerScore.textContent = 0;
-    players.forEach((x) => x.remove());
+    players.forEach((x) => {
+        while (x.children.length) {
+            x.removeChild(x.firstChild);
+        }
+    });
     buttons.forEach((button) => {
         button.removeAttribute('disabled');
     })
@@ -88,7 +93,7 @@ function playGame(event) {
  
 
 //Global Variables & Event Handlers:
-const scores = [0, 0]
+let scores = [0, 0];
 const buttons = document.querySelectorAll('button');
 const players = document.querySelectorAll('.choices');
 const messageBox = document.querySelector('.message-box');
