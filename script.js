@@ -11,8 +11,6 @@ function getComputerChoice() {
 
 
 function playRound(playerSelection, computerSelection) {
-    const messageBox = document.querySelector('.message-box');
-
     if (playerSelection === computerSelection) {
         messageBox.innerHTML = '<p>Tie!</p>';
         return [0, 0];
@@ -38,7 +36,6 @@ function playRound(playerSelection, computerSelection) {
 }
 
 function updateChoices() {
-    const players = document.querySelectorAll('.choices');
     for (let i = 0; i < players.length; i++) {
         const li = document.createElement('li');
         li.textContent = arguments[i];
@@ -47,12 +44,20 @@ function updateChoices() {
 }
 
 function updateScore(points) {
-    const playerScore = document.querySelector('.player-score');
-    const computerScore = document.querySelector('.computer-score');
     scores[0] += points[0];
     scores[1] += points[1];
     playerScore.textContent = scores[0];
     computerScore.textContent = scores[1];
+}
+
+function resetGame() {
+    messageBox.textContent = '';
+    playerScore.textContent = 0;
+    computerScore.textContent = 0;
+    players.forEach((x) => x.remove());
+    buttons.forEach((button) => {
+        button.removeAttribute('disabled');
+    })
 }
 
 
@@ -64,18 +69,19 @@ function playGame(event) {
     updateScore(result);
     const replayButton = document.createElement('button');
     replayButton.textContent = 'Play Again';
+    replayButton.addEventListener('click', resetGame);
 
     if (scores[0] >= 5) {
         buttons.forEach((button) => {
             button.setAttribute('disabled', 'disabled');
         });
-        // messageBox.innerHTML = '<h2>You Won!</h2>';
+        messageBox.innerHTML = '<h2>You Won!</h2>';
         messageBox.appendChild(replayButton);
     } else if (scores[1] >= 5) {
         buttons.forEach((button) => {
             button.setAttribute('disabled', 'disabled');
         });
-        // messageBox.innerHTML = '<h2>Better Luck Next Time!</h2>';
+        messageBox.innerHTML = '<h2>Better Luck Next Time!</h2>';
         messageBox.appendChild(replayButton);
     }
 }
@@ -83,7 +89,12 @@ function playGame(event) {
 
 //Global Variables & Event Handlers:
 const scores = [0, 0]
-buttons = document.querySelectorAll('button');
+const buttons = document.querySelectorAll('button');
+const players = document.querySelectorAll('.choices');
+const messageBox = document.querySelector('.message-box');
+const playerScore = document.querySelector('.player-score');
+const computerScore = document.querySelector('.computer-score');
+
 buttons.forEach((button) => {
     button.addEventListener('click', (event) => {
         event.stopPropagation();
