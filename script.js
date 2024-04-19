@@ -32,15 +32,13 @@ function playRound(playerSelection, computerSelection) {
     } else if (playerSelection === 'scissors' && computerSelection === 'paper') {
         messageBox.innerHTML = '<p>Scissors cut Paper!</p>';
         return [1, 0];
-    };
+    }
 }
 
 function updateChoices() {
-    for (let i = 0; i < players.length; i++) {
-        const li = document.createElement('li');
-        li.textContent = arguments[i];
-        players[i].appendChild(li);
-    };
+    for (let i = 0; i < choices.length; i++) {
+        choices[i].textContent = arguments[i];
+    }
 }
 
 function updateScore(points) {
@@ -52,17 +50,15 @@ function updateScore(points) {
 
 function resetGame() {
     scores = [0, 0];
-    messageBox.textContent = '';
+    messageBox.innerHTML = '<p>Make a choice!</p>';
     playerScore.textContent = 0;
     computerScore.textContent = 0;
-    players.forEach((x) => {
-        while (x.children.length) {
-            x.removeChild(x.firstChild);
-        }
+    choices.forEach((x) => {
+        x.textContent = "";
     });
     buttons.forEach((button) => {
         button.removeAttribute('disabled');
-    })
+    });
 }
 
 
@@ -73,20 +69,21 @@ function playGame(event) {
     const result = playRound(playerSelection, computerSelection);
     updateScore(result);
     const replayButton = document.createElement('button');
-    replayButton.textContent = 'Play Again';
     replayButton.addEventListener('click', resetGame);
 
     if (scores[0] >= 5) {
         buttons.forEach((button) => {
             button.setAttribute('disabled', 'disabled');
         });
-        messageBox.innerHTML = '<h2>You Won!</h2>';
+        messageBox.innerHTML = '<p>You Won!</p>';
+        replayButton.textContent = 'Play Again';
         messageBox.appendChild(replayButton);
     } else if (scores[1] >= 5) {
         buttons.forEach((button) => {
             button.setAttribute('disabled', 'disabled');
         });
-        messageBox.innerHTML = '<h2>Better Luck Next Time!</h2>';
+        messageBox.innerHTML = '<p>You Lost It!</p>';
+        replayButton.textContent = 'Try Again';
         messageBox.appendChild(replayButton);
     }
 }
@@ -95,7 +92,7 @@ function playGame(event) {
 //Global Variables & Event Handlers:
 let scores = [0, 0];
 const buttons = document.querySelectorAll('button');
-const players = document.querySelectorAll('.choices');
+const choices = document.querySelectorAll('.last-choice');
 const messageBox = document.querySelector('.message-box');
 const playerScore = document.querySelector('.player-score');
 const computerScore = document.querySelector('.computer-score');
