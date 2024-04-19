@@ -50,7 +50,7 @@ function updateScore(points) {
 
 function resetGame() {
     scores = [0, 0];
-    messageBox.textContent = 'Make a choice!';
+    messageBox.innerHTML = '<p>Make a choice!</p>';
     playerScore.textContent = 0;
     computerScore.textContent = 0;
     choices.forEach((x) => {
@@ -69,7 +69,6 @@ function playGame(event) {
     const result = playRound(playerSelection, computerSelection);
     updateScore(result);
     const replayButton = document.createElement('button');
-    replayButton.textContent = 'Play Again';
     replayButton.addEventListener('click', resetGame);
 
     if (scores[0] >= 5) {
@@ -77,12 +76,14 @@ function playGame(event) {
             button.setAttribute('disabled', 'disabled');
         });
         messageBox.innerHTML = '<p>You Won!</p>';
+        replayButton.textContent = 'Play Again';
         messageBox.appendChild(replayButton);
     } else if (scores[1] >= 5) {
         buttons.forEach((button) => {
             button.setAttribute('disabled', 'disabled');
         });
-        messageBox.innerHTML = '<p>Better Luck Next Time!</p>';
+        messageBox.innerHTML = '<p>You Lost It!</p>';
+        replayButton.textContent = 'Try Again';
         messageBox.appendChild(replayButton);
     }
 }
