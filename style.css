@@ -111,3 +111,14 @@ button {
     font-size: 18px;
     box-shadow: 0px 5px 10px 0px rgba(0, 0, 0, 0.5);
 }
+
+footer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 40px;
+    width: 100%;
+    margin-top: 20px;
+    background-color: #3b506463;
+    box-shadow: 5px 0 10px 5px rgba(0, 0, 0, 0.5);
+}
