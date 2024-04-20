@@ -1,3 +1,4 @@
+// Function declarations
 function random(n) {
     return Math.floor(Math.random() * n);
 }
@@ -10,67 +11,96 @@ function getComputerChoice() {
 
 
 function playRound(playerSelection, computerSelection) {
-    if (playerSelection === 'rock') {
-        if (computerSelection === 'rock') {
-            console.log('Tie!');
-            return [0, 0];
-        } else if (computerSelection === 'paper') {
-            console.log("You Lose! Paper beats Rock");
-            return [1, 0];
-        } else if (computerSelection === 'scissors') {
-            console.log("You Win! Rock beats Scissors");
-            return [0, 1];
-        }
-    } else if (playerSelection === 'paper') {
-        if (computerSelection === 'rock') {
-            console.log("You Win! Paper beats Rock");
-            return [0, 1];
-        } else if (computerSelection === 'paper') {
-            console.log("Tie!");
-            return [0, 0];
-        } else if (computerSelection === 'scissors') {
-            console.log("You Lose! Scissors cut Paper");
-            return [1, 0];
-        }
-    } else if (playerSelection === 'scissors') {
-        if (computerSelection === 'rock') {
-            console.log("You Lose! Rock beats Scissors");
-            return [1, 0];
-        } else if (computerSelection === 'paper') {
-            console.log("You Win! Scissors cut Paper");
-            return [0, 1];
-        } else if (computerSelection === 'scissors') {
-            console.log("Tie!");
-            return [0, 0];
-        }
+    if (playerSelection === computerSelection) {
+        messageBox.innerHTML = '<p>Tie!</p>';
+        return [0, 0];
+    } else if (playerSelection === 'rock' && computerSelection === 'paper') {
+        messageBox.innerHTML = '<p>Paper beats Rock!</p>';
+        return [0, 1];
+    } else if (playerSelection === 'rock' && computerSelection === 'scissors') {
+        messageBox.innerHTML = '<p>Rock beats Scissors!</p>';
+        return [1, 0]
+    } else if (playerSelection === 'paper' && computerSelection === 'rock') {
+        messageBox.innerHTML = '<p>Paper beats Rock!</p>';
+        return [1, 0]
+    } else if (playerSelection === 'paper' && computerSelection === 'scissors') {
+        messageBox.innerHTML = '<p>Scissors cut paper!</p>';
+        return [0, 1]
+    } else if (playerSelection === 'scissors' && computerSelection === 'rock') {
+        messageBox.innerHTML = '<p>Rock beats Scissors!</p';
+        return [0, 1]
+    } else if (playerSelection === 'scissors' && computerSelection === 'paper') {
+        messageBox.innerHTML = '<p>Scissors cut Paper!</p>';
+        return [1, 0];
     }
 }
 
-
-function playGame() {
-    let computerScore = 0;
-    let playerScore = 0;
-
-    for (let i = 0; i < 5; i++) {
-        const playerSelection = prompt('Enter your choice: ').toLowerCase();
-        const computerSelection = getComputerChoice();
-        let result = playRound(playerSelection, computerSelection);
-        if (result[0] > result[1]) {
-            computerScore++;
-        } else if (result[0] < result[1]) {
-            playerScore++;
-        }
+function updateChoices() {
+    for (let i = 0; i < choices.length; i++) {
+        choices[i].textContent = arguments[i];
     }
-    
-    console.log(`
-        Computer:   ${computerScore}
-        Player  :   ${playerScore}
+}
 
-        ${computerScore === playerScore ? 'The Game ended with a Tie!' :
-            computerScore > playerScore ? 'Computer won the Game!!' :
-                'You won the Game!!'}
-    `);
+function updateScore(points) {
+    scores[0] += points[0];
+    scores[1] += points[1];
+    playerScore.textContent = scores[0];
+    computerScore.textContent = scores[1];
+}
+
+function resetGame() {
+    scores = [0, 0];
+    messageBox.innerHTML = '<p>Make a choice!</p>';
+    playerScore.textContent = 0;
+    computerScore.textContent = 0;
+    choices.forEach((x) => {
+        x.textContent = "";
+    });
+    buttons.forEach((button) => {
+        button.removeAttribute('disabled');
+    });
 }
 
 
-playGame();
+function playGame(event) {
+    const playerSelection = event.target.innerHTML.toLowerCase();
+    const computerSelection = getComputerChoice();
+    updateChoices(playerSelection, computerSelection);
+    const result = playRound(playerSelection, computerSelection);
+    updateScore(result);
+    const replayButton = document.createElement('button');
+    replayButton.addEventListener('click', resetGame);
+
+    if (scores[0] >= 5) {
+        buttons.forEach((button) => {
+            button.setAttribute('disabled', 'disabled');
+        });
+        messageBox.innerHTML = '<p>You Won!</p>';
+        replayButton.textContent = 'Play Again';
+        messageBox.appendChild(replayButton);
+    } else if (scores[1] >= 5) {
+        buttons.forEach((button) => {
+            button.setAttribute('disabled', 'disabled');
+        });
+        messageBox.innerHTML = '<p>You Lost It!</p>';
+        replayButton.textContent = 'Try Again';
+        messageBox.appendChild(replayButton);
+    }
+}
+ 
+
+//Global Variables & Event Handlers:
+let scores = [0, 0];
+const buttons = document.querySelectorAll('button');
+const choices = document.querySelectorAll('.last-choice');
+const messageBox = document.querySelector('.message-box');
+const playerScore = document.querySelector('.player-score');
+const computerScore = document.querySelector('.computer-score');
+
+buttons.forEach((button) => {
+    button.addEventListener('click', (event) => {
+        event.stopPropagation();
+        event.preventDefault();
+        playGame(event);
+    }, false);
+});
